@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SherlockMidi.iml" filepath="$PROJECT_DIR$/SherlockMidi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sherlockmidi/sherlockmidi.iml" filepath="$PROJECT_DIR$/sherlockmidi/sherlockmidi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MidiDriverUpdate.iml" filepath="$PROJECT_DIR$/.idea/modules/MidiDriverUpdate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sample/MidiDriverUpdate.sample.iml" filepath="$PROJECT_DIR$/.idea/modules/sample/MidiDriverUpdate.sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sample/MidiDriverUpdate.sample.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sample/MidiDriverUpdate.sample.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sample/MidiDriverUpdate.sample.main.iml" filepath="$PROJECT_DIR$/.idea/modules/sample/MidiDriverUpdate.sample.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sample/MidiDriverUpdate.sample.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sample/MidiDriverUpdate.sample.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sherlockmidi/MidiDriverUpdate.sherlockmidi.iml" filepath="$PROJECT_DIR$/.idea/modules/sherlockmidi/MidiDriverUpdate.sherlockmidi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sherlockmidi/MidiDriverUpdate.sherlockmidi.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sherlockmidi/MidiDriverUpdate.sherlockmidi.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sherlockmidi/MidiDriverUpdate.sherlockmidi.main.iml" filepath="$PROJECT_DIR$/.idea/modules/sherlockmidi/MidiDriverUpdate.sherlockmidi.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sherlockmidi/MidiDriverUpdate.sherlockmidi.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sherlockmidi/MidiDriverUpdate.sherlockmidi.unitTest.iml" />
     </modules>
   </component>
 </project>

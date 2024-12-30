@@ -27,6 +27,7 @@ package cn.sherlock.com.sun.media.sound;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 import java.lang.ref.WeakReference;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -76,6 +77,9 @@ public class SoftSynthesizer implements AudioSynthesizer,
         private float[] silentbuffer = null;
         private int samplesize;
 
+        private boolean isRecording = false;
+        private ByteArrayOutputStream recordStream = null;
+
         public void setInputStream(AudioInputStream stream)
         {
             this.stream = stream;
@@ -97,10 +101,19 @@ public class SoftSynthesizer implements AudioSynthesizer,
 
         public int read(byte[] b, int off, int len) throws IOException {
              AudioInputStream local_stream = stream;
-             if(local_stream != null)
-                 return local_stream.read(b, off, len);
-             else
-             {
+             if(local_stream != null) {
+                int bytesRead = local_stream.read(b, off, len);
+
+                if (bytesRead < 0) {
+                    return bytesRead;
+                }
+
+                if (isRecording) {
+                    recordStream.write(b, off, bytesRead);
+                }
+
+                return bytesRead;
+            } else {
                  int flen = len / samplesize;
                  if(silentbuffer == null || silentbuffer.length < flen)
                      silentbuffer = new float[flen];
@@ -124,7 +137,7 @@ public class SoftSynthesizer implements AudioSynthesizer,
                                     _jitter_stream.close();
                                 } catch (IOException e) {
                                     e.printStackTrace();
-                                } 
+                                }
                              if(_sourceDataLine != null)
                                  _sourceDataLine.close();
                          }
@@ -156,6 +169,29 @@ public class SoftSynthesizer implements AudioSynthesizer,
             AudioInputStream astream  = weak_stream_link.get();
             if(astream != null)
                 astream.close();
+        }
+
+        public synchronized void startRecording() throws IOException {
+            if (isRecording) {
+                return;
+            }
+
+            this.recordStream = new ByteArrayOutputStream();
+            this.isRecording = true;
+        }
+
+        public synchronized byte[] stopRecording() throws IOException {
+            if (!isRecording) {
+                return new byte[0];
+            }
+
+            this.isRecording = false;
+            byte[] audioBytes = recordStream.toByteArray();
+
+            recordStream.reset();
+            recordStream = null;
+
+            return audioBytes;
         }
     }
 
@@ -693,6 +729,34 @@ public class SoftSynthesizer implements AudioSynthesizer,
             if (ins instanceof ModelInstrument) {
                 unloadInstrument(ins);
             }
+        }
+    }
+
+    public void startRecording() throws IOException {
+        synchronized (control_mutex) {
+            if (!isOpen()) {
+                throw new IllegalStateException("Synthesizer is not open.");
+            }
+
+            if (weakstream == null) {
+                throw new IllegalStateException("No audio stream is available to record.");
+            }
+
+            weakstream.startRecording();
+        }
+    }
+
+    public byte[] stopRecording() throws IOException {
+        synchronized (control_mutex) {
+            if (!isOpen()) {
+                throw new IllegalStateException("Synthesizer is not open.");
+            }
+
+            if (weakstream == null) {
+                throw new IllegalStateException("No audio stream is available to record.");
+            }
+
+            return weakstream.stopRecording();
         }
     }
 
